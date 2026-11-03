@@ -2025,10 +2025,14 @@ section,
   .hero .hero-desc { font-size: 15px; }
 }
 
-/* Menu HP: matikan blur header agar menu bisa terbuka penuh */
+/* Menu HP: blur header harus mati supaya menu bisa penuh layar */
 @media (max-width: 1199px) {
-  .header {
-    -webkit-backdrop-filter: none;
-    backdrop-filter: none;
+  .header,
+  .scrolled .header {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    filter: none !important;
+    transform: none !important;
   }
 }
+
