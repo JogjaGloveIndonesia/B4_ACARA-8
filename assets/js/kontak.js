@@ -1,5 +1,6 @@
-/* Kirim form kontak ke email lewat FormSubmit (https://formsubmit.co) */
+/* Kirim form kontak ke email lewat Web3Forms */
 (function () {
+  var ACCESS_KEY = "ISI_ACCESS_KEY_DI_SINI";
   var EMAIL = "setyadika966@gmail.com";
   var form = document.getElementById("contact-form");
   if (!form) return;
@@ -11,70 +12,41 @@
 
   function show(el, on) { el.style.display = on ? "block" : "none"; }
 
-  // Link cadangan: membuka aplikasi email dengan isi pesan sudah terisi
-  function mailtoLink() {
-    var subject = encodeURIComponent("Pesan website: " + form.subject.value);
-    var body = encodeURIComponent(
-      "Nama: " + form.name.value + "\nEmail: " + form.email.value + "\n\n" + form.message.value
-    );
-    return "mailto:" + EMAIL + "?subject=" + subject + "&body=" + body;
-  }
-
-  function showError(text, withMailto) {
-    errorBox.textContent = text;
-    if (withMailto) {
-      errorBox.appendChild(document.createElement("br"));
-      var a = document.createElement("a");
-      a.href = mailtoLink();
-      a.textContent = "Klik di sini untuk mengirim lewat aplikasi email";
-      a.style.color = "#fff";
-      a.style.textDecoration = "underline";
-      errorBox.appendChild(a);
-    }
-    show(errorBox, true);
-  }
-
   form.addEventListener("submit", function (e) {
     e.preventDefault();
-    show(errorBox, false); show(sentBox, false);
-
-    // FormSubmit tidak bisa dipakai jika halaman dibuka langsung dari file (file:///)
-    if (location.protocol === "file:") {
-      showError("Halaman ini dibuka langsung dari file. Buka lewat Live Server / localhost atau setelah website online agar form bisa mengirim.", true);
-      return;
-    }
-
-    show(loading, true);
+    show(errorBox, false); show(sentBox, false); show(loading, true);
     button.disabled = true;
 
     var data = new FormData(form);
-    data.append("_subject", "Pesan website: " + form.subject.value);
-    data.append("_template", "table");
-    data.append("_captcha", "false");
+    data.append("access_key", ACCESS_KEY);
+    data.append("subject", "Pesan website: " + form.subject.value);
+    data.append("from_name", "Website PT Jogja Glove Indonesia");
 
-    fetch("https://formsubmit.co/ajax/" + EMAIL, {
+    fetch("https://api.web3forms.com/submit", {
       method: "POST",
       headers: { "Accept": "application/json" },
       body: data
     })
-      .then(function (r) {
-        return r.json().then(function (j) { return { ok: r.ok, body: j }; });
-      })
+      .then(function (r) { return r.json(); })
       .then(function (res) {
         show(loading, false);
         button.disabled = false;
-        if (res.ok && String(res.body.success) === "true") {
+        if (res.success) {
           show(sentBox, true);
           form.reset();
         } else {
-          // Biasanya: email belum diaktivasi lewat email dari FormSubmit
-          showError((res.body && res.body.message) ? res.body.message : "Gagal mengirim pesan.", true);
+          throw new Error(res.message || "Gagal mengirim pesan.");
         }
       })
       .catch(function (err) {
         show(loading, false);
         button.disabled = false;
-        showError("Pesan belum terkirim (koneksi ke layanan pengirim gagal). Periksa internet / matikan ad blocker, atau kirim langsung ke " + EMAIL + ".", true);
+        var mailto = "mailto:" + EMAIL +
+          "?subject=" + encodeURIComponent(form.subject.value) +
+          "&body=" + encodeURIComponent(form.message.value + "\n\n" + form.name.value + " (" + form.email.value + ")");
+        errorBox.innerHTML = "Pesan belum terkirim. Periksa internet / matikan ad blocker, atau kirim langsung ke " +
+          EMAIL + ". <br><a href=\"" + mailto + "\">Klik di sini untuk mengirim lewat aplikasi email</a>";
+        show(errorBox, true);
         console.error(err);
       });
   });
