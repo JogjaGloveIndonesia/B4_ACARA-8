@@ -1,4 +1,3 @@
-/* Kirim form kontak ke email lewat FormSubmit (https://formsubmit.co) */
 (function () {
   var EMAIL = "setyadika966@gmail.com";
   var form = document.getElementById("contact-form");
@@ -26,7 +25,13 @@
       headers: { "Accept": "application/json" },
       body: data
     })
-      .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, body: j }; }); })
+      .then(function (r) {
+        return r.text().then(function (t) {
+          var j;
+          try { j = JSON.parse(t); } catch (err) { j = { message: "Respon bukan JSON" }; }
+          return { ok: r.ok, status: r.status, body: j };
+        });
+      })
       .then(function (res) {
         show(loading, false);
         button.disabled = false;
@@ -34,13 +39,13 @@
           show(sentBox, true);
           form.reset();
         } else {
-          throw new Error(res.body.message || "Gagal mengirim pesan.");
+          throw new Error("Kode " + res.status + ": " + (res.body.message || "tidak ada keterangan"));
         }
       })
       .catch(function (err) {
         show(loading, false);
         button.disabled = false;
-        errorBox.textContent = "Pesan belum terkirim. Silakan coba lagi atau kirim langsung ke " + EMAIL + ".";
+        errorBox.textContent = "Pesan belum terkirim. " + err.message;
         show(errorBox, true);
         console.error(err);
       });
