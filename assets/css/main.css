@@ -2034,3 +2034,17 @@ section,
   }
 }
 
+@media (max-width: 1199px) {
+  .navmenu ul {
+    bottom: auto;
+    padding: 10px 0;
+  }
+  .navmenu a,
+  .navmenu a:focus {
+    padding: 12px 24px;
+  }
+  .navmenu .active,
+  .navmenu .active:focus {
+    color: #d11a2a;   /* menu aktif merah, sama dengan garis di laptop */
+  }
+}
