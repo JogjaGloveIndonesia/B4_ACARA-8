@@ -2048,3 +2048,27 @@ section,
     color: #d11a2a;   /* menu aktif merah, sama dengan garis di laptop */
   }
 }
+
+@media (max-width: 1199px) {
+  /* menu aktif: teks merah + garis merah di kiri */
+  .header .navmenu .active,
+  .header .navmenu .active:focus {
+    color: #d11a2a;
+    border-left: 4px solid #d11a2a;
+    padding-left: 20px;
+  }
+
+  /* menu lain saat disentuh: merah juga */
+  .header .navmenu a:hover {
+    color: #d11a2a;
+  }
+}
+
+#about {
+  scroll-margin-top: 92px;
+}
+@media (max-width: 1199px) {
+  #about {
+    scroll-margin-top: 62px;
+  }
+}
