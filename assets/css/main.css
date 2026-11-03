@@ -2025,3 +2025,10 @@ section,
   .hero .hero-desc { font-size: 15px; }
 }
 
+/* Menu HP: matikan blur header agar menu bisa terbuka penuh */
+@media (max-width: 1199px) {
+  .header {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
