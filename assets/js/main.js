@@ -211,3 +211,28 @@
   document.addEventListener('scroll', navmenuScrollspy);
 
 })();
+
+  /**
+   * Navmenu Scrollspy (satu menu bisa mencakup beberapa section)
+   */
+  let navmenulinks = document.querySelectorAll('.navmenu a');
+
+  function navmenuScrollspy() {
+    let position = window.scrollY + 200;
+    navmenulinks.forEach(navmenulink => {
+      if (!navmenulink.hash) return;
+      let ids = (navmenulink.dataset.spySections || navmenulink.hash.slice(1)).split(/\s+/).filter(Boolean);
+      let isActive = ids.some(id => {
+        let section = document.getElementById(id);
+        return section && position >= section.offsetTop && position <= (section.offsetTop + section.offsetHeight);
+      });
+      if (isActive) {
+        document.querySelectorAll('.navmenu a.active').forEach(link => link.classList.remove('active'));
+        navmenulink.classList.add('active');
+      } else {
+        navmenulink.classList.remove('active');
+      }
+    });
+  }
+  window.addEventListener('load', navmenuScrollspy);
+  document.addEventListener('scroll', navmenuScrollspy);
