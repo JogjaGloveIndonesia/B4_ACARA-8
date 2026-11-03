@@ -1,6 +1,6 @@
 /* Kirim form kontak ke email lewat Web3Forms */
 (function () {
-  var ACCESS_KEY = "ISI_ACCESS_KEY_DI_SINI";
+  var ACCESS_KEY = "95f0c32b-e944-4862-b122-d75c7215066d";
   var EMAIL = "setyadika966@gmail.com";
   var form = document.getElementById("contact-form");
   if (!form) return;
