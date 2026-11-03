@@ -1941,8 +1941,6 @@ section,
   --background-color: rgba(1, 8, 45, 0.85);
   --nav-hover-color: #d11a2a;            /* garis bawah menu aktif */
   --nav-dropdown-hover-color: #266ca9;   /* warna menu saat dibuka di HP */
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
   border-bottom: 1px solid rgba(173, 225, 251, 0.12);
 }
 .scrolled .header {
