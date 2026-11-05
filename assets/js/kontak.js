@@ -19,7 +19,7 @@
 
     var data = new FormData(form);
     data.append("access_key", ACCESS_KEY);
-    data.append("subject", "Pesan website: " + form.subject.value);
+data.set("subject", "Pesan website: " + form.subject.value);
     data.append("from_name", "Website PT Jogja Glove Indonesia");
 
     fetch("https://api.web3forms.com/submit", {
