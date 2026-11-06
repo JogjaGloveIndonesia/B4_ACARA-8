@@ -2064,7 +2064,7 @@ section,
   }
 }
 
-#tentang {
+#about {
   scroll-margin-top: 92px;
 }
 @media (max-width: 1199px) {
@@ -2109,21 +2109,3 @@ section,
   border-right: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
   border-bottom: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
 }
-
-.struktur .org-scroll { overflow: hidden; padding-bottom: 0; }
-.struktur .tree { transform-origin: top left; }
-.struktur .org-box { width: 92px; padding: 7px 4px; font-size: 10px; }
-.struktur .org-director,
-.struktur .org-vice { width: 130px; }
-.struktur .org-manager { width: 120px; }
-
-.about .about-img {
-  width: 100%;
-  max-height: 340px;
-  object-fit: cover;
-  border-radius: 8px;
-}
-@media (max-width: 991px) {
-  .about .about-img { max-height: 260px; }
-}
-

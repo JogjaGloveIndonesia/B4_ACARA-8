@@ -188,6 +188,27 @@
     }
   });
 
+  /**
+   * Navmenu Scrollspy
+   */
+  let navmenulinks = document.querySelectorAll('.navmenu a');
+
+  function navmenuScrollspy() {
+    navmenulinks.forEach(navmenulink => {
+      if (!navmenulink.hash) return;
+      let section = document.querySelector(navmenulink.hash);
+      if (!section) return;
+      let position = window.scrollY + 200;
+      if (position >= section.offsetTop && position <= (section.offsetTop + section.offsetHeight)) {
+        document.querySelectorAll('.navmenu a.active').forEach(link => link.classList.remove('active'));
+        navmenulink.classList.add('active');
+      } else {
+        navmenulink.classList.remove('active');
+      }
+    })
+  }
+  window.addEventListener('load', navmenuScrollspy);
+  document.addEventListener('scroll', navmenuScrollspy);
 
 })();
 
@@ -215,16 +236,3 @@
   }
   window.addEventListener('load', navmenuScrollspy);
   document.addEventListener('scroll', navmenuScrollspy);
-
-  function fitStruktur() {
-  var wrap = document.querySelector('.struktur .org-scroll');
-  var tree = document.querySelector('.struktur .tree');
-  if (!wrap || !tree) return;
-  tree.style.transform = 'none';
-  var scale = Math.min(1, wrap.clientWidth / tree.scrollWidth);
-  tree.style.transform = 'scale(' + scale + ')';
-  tree.style.marginLeft = ((wrap.clientWidth - tree.scrollWidth * scale) / 2) + 'px';
-  wrap.style.height = (tree.offsetHeight * scale + 10) + 'px';
-}
-window.addEventListener('load', fitStruktur);
-window.addEventListener('resize', fitStruktur);
